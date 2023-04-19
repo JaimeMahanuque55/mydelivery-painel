@@ -1,11 +1,14 @@
-import { Menu } from "@mui/icons-material"
-import { AppBar, Toolbar, Typography, Box, Button, IconButton } from "@mui/material"
-import Link from "next/link"
-import { useRouter } from "next/navigation"
+import { Menu } from "@mui/icons-material";
+import { AppBar, Toolbar, Typography, Box, Button, IconButton } from "@mui/material";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { HeaderDrawer } from "./HeaderDrawer";
+import { useState } from 'react';
 
 export const Header = () => {
 
   const router = useRouter();
+  const [drawerOpen, setDrawerOpen] = useState(false)
 
   const pageTitle = "Painel mydelivery"
 
@@ -13,7 +16,7 @@ export const Header = () => {
     router.push('/login');
   }
   const handleDrawerToggle = () => {
-
+    setDrawerOpen(!drawerOpen);
   }
 
   return (
@@ -54,6 +57,15 @@ export const Header = () => {
           </Box>
         </Toolbar>
       </AppBar>
+
+      <Box component="nav">
+        <HeaderDrawer
+          open={drawerOpen}
+          onClose={handleDrawerToggle}
+          title={pageTitle}
+          onLogout={handleLogout}
+        />
+      </Box>
     </>
   )
 }
