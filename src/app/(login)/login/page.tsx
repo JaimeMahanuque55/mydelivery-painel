@@ -1,5 +1,6 @@
 "use client";
 
+import { api } from "@/libs/api";
 import { Box, Button, TextField, Typography, Link as MuiLink, Alert } from "@mui/material";
 import Link from "next/link";
 import { useState, FormEvent } from "react";
@@ -10,7 +11,7 @@ const Page = () => {
   const [emailField, setEmailField] = useState('');
   const [passwordField, setPasswordField] = useState('');
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     if (!emailField || !passwordField) {
@@ -20,6 +21,11 @@ const Page = () => {
 
     setError('');
     setLoading(true);
+    const result = await api.login(emailField, passwordField);
+    setLoading(false);
+    if (result.error) {
+      setError(result.error);
+    }
   }
 
   return (
@@ -34,7 +40,6 @@ const Page = () => {
         <TextField
           label="Digite seu e-mail"
           name="email"
-          // required
           fullWidth
           autoFocus
           sx={{ mb: 2 }}
@@ -46,7 +51,6 @@ const Page = () => {
           label="Digite sua senha"
           name="password"
           type="password"
-          // required
           fullWidth
           sx={{ mb: 2 }}
           onChange={e => setPasswordField(e.target.value)}
