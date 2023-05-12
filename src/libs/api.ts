@@ -1,4 +1,18 @@
 import { Order } from "@/types/Order";
+import { OrderStatus } from "@/types/OrderStatus";
+import { Product } from "@/types/Product";
+
+const tmpProduct: Product = {
+  id: 999,
+  image: 'https://saopaulosecreto.com/wp-content/uploads/2022/10/Get-Burger-1024x683.jpg',
+  category: {
+    id: 99,
+    name: 'Burgers'
+  },
+  name: 'Burgao Mau',
+  price: 100,
+  description: 'Melhor hamburguer da cidade'
+}
 
 export const api = {
   login: async (email: string, password: string): Promise<{ error: string, token?: string }> => {
@@ -33,13 +47,44 @@ export const api = {
       }, 1000);
     })
   },
-  getOrders: async () => {
+  getOrders: async (): Promise<Order[]> => {
     return new Promise(resolve => {
       setTimeout(() => {
         const orders: Order[] = [];
+        const statuses: OrderStatus[] = ['preparing', 'sent', 'delivered']
 
         // TODO: requests array
 
+        for (let i = 0; i < 6; i++) {
+          orders.push({
+            id: parseInt('12' + i),
+            status: statuses[Math.floor(Math.random() * 3)],
+            orderDate: '2023-05-04 18:30',
+            userId: '1',
+            userName: 'James',
+            shippingAddress: {
+              id: 99,
+              cep: '11133334',
+              address: 'Q.15',
+              number: '1200',
+              neighborhood: 'Liberdade',
+              city: 'Matola',
+              state: 'MP',
+              complement: 'yes'
+            },
+            shippingPrice: 12,
+            paymentType: 'money',
+            changeValue: 0,
+            cupom: 'BLA',
+            cupomDiscount: 2,
+            products: [
+              { qt: 2, product: tmpProduct },
+              { qt: 3, product: { ...tmpProduct, id: 888, name: 'Burgao doce' } }
+            ],
+            subtotal: 99,
+            total: 120
+          });
+        }
         resolve(orders);
       }, 1000);
     });
