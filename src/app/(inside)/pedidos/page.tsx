@@ -5,7 +5,7 @@ import { api } from "@/libs/api";
 import { Order } from "@/types/Order";
 import { OrderStatus } from "@/types/OrderStatus";
 import { Refresh, Search } from "@mui/icons-material";
-import { Box, Button, CircularProgress, Grid, InputAdornment, Skeleton, TextField, Typography } from "@mui/material"
+import { Box, Button, CircularProgress, Grid, InputAdornment, Skeleton, TextField, Typography } from "@mui/material";
 import { KeyboardEvent, useEffect, useState } from "react";
 
 const Page = () => {
