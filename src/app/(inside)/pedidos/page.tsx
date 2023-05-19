@@ -2,6 +2,7 @@
 
 import { OrderItem } from "@/components/OrderItem";
 import { api } from "@/libs/api";
+import { dateFormat } from "@/libs/dateFormat";
 import { Order } from "@/types/Order";
 import { OrderStatus } from "@/types/OrderStatus";
 import { Refresh, Search } from "@mui/icons-material";
@@ -132,7 +133,37 @@ const Page = () => {
         </Grid>
       </Box >
       <Box sx={{ display: 'none', displayPrint: 'block' }}>
-        ...
+        {printOrder &&
+          <>
+            <Typography component="h5" variant="h5">Pedido</Typography>
+            <Box>ID: #{printOrder.id}</Box>
+            <Box>Data do pedido: {dateFormat(printOrder.orderDate)}</Box>
+            <Box>Cliente: {printOrder.userName}</Box>
+
+            <Typography component="h5" variant="h5">Pagamento</Typography>
+            <Box>Tipo de pagamento: {printOrder.paymentType === 'card' ? 'Cartao' : 'Dinheiro'}</Box>
+            <Box>Subtotal: Mzn {printOrder.subtotal.toFixed(2)}</Box>
+            <Box>Entrega: Mzn {printOrder.shippingPrice.toFixed(2)}</Box>
+            {printOrder.cupomDiscount && <Box>Desconto: -Mzn {printOrder.cupomDiscount.toFixed(2)}</Box>}
+            <Box>Total: Mzn {printOrder.total.toFixed(2)}</Box>
+
+            <Typography component="h5" variant="h5">Endereco</Typography>
+            <Box>Rua: {printOrder.shippingAddress.address}</Box>
+            <Box>Numero: {printOrder.shippingAddress.number}</Box>
+            <Box>Complemento: {printOrder.shippingAddress.complement}</Box>
+            <Box>BI: {printOrder.shippingAddress.cep}</Box>
+            <Box>Bairro: {printOrder.shippingAddress.neighborhood}</Box>
+            <Box>Cidade: {printOrder.shippingAddress.city}</Box>
+            <Box>Estado: {printOrder.shippingAddress.state}</Box>
+
+            <Typography component="h5" variant="h5">Itens</Typography>
+            {printOrder.products.map((item, index) => (
+              <Box key={index}>
+                {item.qt}x {item.product.name}
+              </Box>
+            ))}
+          </>
+        }
       </Box>
     </>
   )
