@@ -3,14 +3,29 @@
 import { OrderItem } from "@/components/OrderItem";
 import { api } from "@/libs/api";
 import { dateFormat } from "@/libs/dateFormat";
+import { Category } from "@/types/Category";
 import { Order } from "@/types/Order";
 import { OrderStatus } from "@/types/OrderStatus";
+import { Product } from "@/types/Product";
 import { Refresh, Search } from "@mui/icons-material";
 import { Box, Button, CircularProgress, Grid, InputAdornment, Skeleton, Table, TableBody, TableCell, TableHead, TableRow, TextField, Typography } from "@mui/material";
 import { KeyboardEvent, useEffect, useState } from "react";
 
 const Page = () => {
   const [loading, setLoading] = useState(false);
+  const [products, setProducts] = useState<Product[]>([]);
+  const [categories, setCategories] = useState<Category[]>([]);
+
+  useEffect(() => {
+    getProducts();
+  }, [])
+
+  const getProducts = async () => {
+    setLoading(true);
+    setProducts(await api.getProducts());
+    setCategories(await api.getCategories());
+    setLoading(false);
+  }
 
   const handleNewProduct = () => {
 
