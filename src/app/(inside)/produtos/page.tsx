@@ -56,6 +56,7 @@ const Page = () => {
                 <ProductTableSkeleton />
                 <ProductTableSkeleton />
                 <ProductTableSkeleton />
+                <ProductTableSkeleton />
               </>
 
             }
