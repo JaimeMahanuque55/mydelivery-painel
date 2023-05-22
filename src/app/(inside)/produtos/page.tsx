@@ -1,6 +1,7 @@
 "use client";
 
 import { OrderItem } from "@/components/OrderItem";
+import { ProductTableItem } from "@/components/ProductTableItem";
 import { ProductTableSkeleton } from "@/components/ProductTableSkeleton";
 import { api } from "@/libs/api";
 import { dateFormat } from "@/libs/dateFormat";
@@ -8,7 +9,7 @@ import { Category } from "@/types/Category";
 import { Order } from "@/types/Order";
 import { OrderStatus } from "@/types/OrderStatus";
 import { Product } from "@/types/Product";
-import { Refresh, Search } from "@mui/icons-material";
+import { Key, Refresh, Search } from "@mui/icons-material";
 import { Box, Button, CircularProgress, Grid, InputAdornment, Skeleton, Table, TableBody, TableCell, TableHead, TableRow, TextField, Typography } from "@mui/material";
 import { KeyboardEvent, useEffect, useState } from "react";
 
@@ -32,6 +33,15 @@ const Page = () => {
 
   }
 
+  const handleEditProduct = (product: Product) => {
+
+  }
+
+  const handleDeleteProduct = (product: Product) => {
+
+  }
+
+
   return (
     <>
       <Box sx={{ my: 3 }}>
@@ -47,7 +57,7 @@ const Page = () => {
               <TableCell>Nome</TableCell>
               <TableCell sx={{ display: { xs: 'none', md: 'table-cell' } }}>Preco</TableCell>
               <TableCell sx={{ display: { xs: 'none', md: 'table-cell' } }}>Categoria</TableCell>
-              <TableCell sx={{ xs: 50, md: 130 }}>Accoes</TableCell>
+              <TableCell sx={{ width: { xs: 50, md: 130 } }}>Accoes</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -58,7 +68,15 @@ const Page = () => {
                 <ProductTableSkeleton />
                 <ProductTableSkeleton />
               </>
-
+            }
+            {!loading && products.map(item => (
+              <ProductTableItem
+                key={item.id}
+                item={item}
+                onEdit={handleEditProduct}
+                onDelete={handleDeleteProduct}
+              />
+            ))
             }
 
           </TableBody>
