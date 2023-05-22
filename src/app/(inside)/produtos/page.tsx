@@ -1,6 +1,7 @@
 "use client";
 
 import { OrderItem } from "@/components/OrderItem";
+import { ProductTableSkeleton } from "@/components/ProductTableSkeleton";
 import { api } from "@/libs/api";
 import { dateFormat } from "@/libs/dateFormat";
 import { Category } from "@/types/Category";
@@ -50,6 +51,14 @@ const Page = () => {
             </TableRow>
           </TableHead>
           <TableBody>
+            {loading &&
+              <>
+                <ProductTableSkeleton />
+                <ProductTableSkeleton />
+                <ProductTableSkeleton />
+              </>
+
+            }
 
           </TableBody>
         </Table>
