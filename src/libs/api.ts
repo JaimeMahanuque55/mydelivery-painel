@@ -121,6 +121,13 @@ export const api = {
         resolve(list)
       }, 200);
     })
+  },
+  deleteProduct: async (id: number): Promise<boolean> => {
+    return new Promise(resolve => {
+      setTimeout(() => {
+        resolve(true);
+      }, 1000);
+    })
   }
 
 }
