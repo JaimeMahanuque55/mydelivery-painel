@@ -8,7 +8,7 @@ import { Category } from "@/types/Category";
 import { Product } from "@/types/Product";
 
 import { Box, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Table, TableBody, TableCell, TableHead, TableRow, Typography } from "@mui/material";
-import { useEffect, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 
 const Page = () => {
   const [loading, setLoading] = useState(false);
@@ -65,8 +65,21 @@ const Page = () => {
     setEditDialogOpen(true);
   }
 
-  const handleSaveEditDialog = () => {
+  const handleSaveEditDialog = async (event: FormEvent<HTMLFormElement>) => {
+    let form = new FormData(event.currentTarget);
 
+    setLoadingEditDialog(true);
+    if (productToEdit) {
+      form.append('id', productToEdit.id.toString());
+      await api.updateProduct(form);
+    } else {
+      await api.createProduct(form);
+    }
+
+    setLoadingEditDialog(false);
+    setEditDialogOpen(false);
+
+    getProducts();
   }
 
 
